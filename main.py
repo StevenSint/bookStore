@@ -29,3 +29,17 @@ def get_single_book(book_id : int):
             return book
     
     return {"message" : "Book not found"}
+
+# Get Retrive books by filtering using query parameters
+@app.get("/books")
+def getBooks(author : str | None, year : int | None):
+
+    filtered_books = books
+
+    if author :
+        return {"author" : author}
+
+    if year:
+        return {"year" : year}
+
+    return {"message" : "Not found"}
