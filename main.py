@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from typing import Optional
 
 app = FastAPI()
 
@@ -12,34 +13,43 @@ books = [
 
 @app.get('/')
 def read_root():
-    return {"Hello" : "World"}\
+    return {"Hello": "World"}
 
-# get retrive all books
-@app.get('/books')
-def getAllBooks():
-    return books
-
-# get retrive single book
 @app.get("/books/{book_id}")
-def get_single_book(book_id : int):
-
-    #Get a specific book by ID (path parameter)
+def get_single_book(book_id: int):
     for book in books:
         if book["id"] == book_id:
             return book
+    return {"message": "Book not found"}
+
+# @app.get("/books")
+# def get_books(author: Optional[str] = None, year: Optional[int] = None):
+#     result = []
     
-    return {"message" : "Book not found"}
+#     for book in books:
+#         # Check author filter
+#         if author and author.lower() not in book["author"].lower():
+#             continue
+            
+#         # Check year filter  
+#         if year is not None and book["year"] != year:
+#             continue
+            
+#         result.append(book)
+    
+#     return {
+#         "filters": {"author": author, "year": year},
+#         "count": len(result),
+#         "books": result
+#     }
 
-# Get Retrive books by filtering using query parameters
-@app.get("/books")
-def getBooks(author : str | None, year : int | None):
-
-    filtered_books = books
-
-    if author :
-        return {"author" : author}
-
-    if year:
-        return {"year" : year}
-
-    return {"message" : "Not found"}
+@app.post("/books")
+def create_book (book : Book ):
+    new_book = {
+        "id" : 6,
+        "title" : book titile,
+        "author" : book.author,
+        "year" : book.year}
+        books.append(new_book)
+I
+    return { "message" : "Book created successfully" , "Book" : new_book}
